@@ -1,6 +1,6 @@
 ---
 title: 利用apache 2搭建一个简单的网站
-catagories:
+categories:
 - 网站搭建
 tags: [apache2]
 ---

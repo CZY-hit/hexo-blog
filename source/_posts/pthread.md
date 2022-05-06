@@ -1,14 +1,18 @@
 ---
 title: C/C++中的多线程头文件pthread
 categories:
-- linux下聊天软件的学习
+- 聊天室
+- 多线程
 tags: [pthread,聊天室]
 ---
+
+在Unix/Linux系统中，C/C++提供了`pthread`（POSIX线程）API。它允许我们为并发流程创建多个线程，这可以提高程序在多核处理器或上的执行速度。
+<!--more-->
 引用
 >https://www.geeksforgeeks.org/thread-functions-in-c-c/?ref=lbp
 >https://blog.csdn.net/Set_Mode/article/details/121439463
+>http://www.csc.villanova.edu/~mdamian/threads/posixthreads.html
 
-在Unix/Linux系统中，C/C++提供了`pthread`（POSIX线程）API。它允许我们为并发流程创建多个线程，这可以提高程序在多核处理器或上的执行速度。通过利用`IO`或者其他可能停止进程的系统功能的延迟，单处理器系统上也能获取一定收益。
 
 想要使用pthreads库的所有功能，我们必须在`.c`或`.c++`文件中包含`pthread.h`头文件，在编译文件时在命令行中使用 `-pthread` 或 `-lpthread`。
 
@@ -28,8 +32,9 @@ a.  *pthread_create:*  用于创建新线程
 -  **thread**:返回创建的线程的线程ID，是一个指向无符号整数值的指针。
 - **attr**: 默认值为NULL，目前没有用，不需要修改。是一个指向用于定义线程属性（如分离状态、调度策略等）的结构的指针。
 - **start_routine**: 是一个指向线程执行子程序的指针。子程序的返回类型和参数类型必须是 `void * `类型。如果同时传递多个指针需要用到结构体。
-	
-b.*pthread_exit:*用于终止线程
+- **arg**: void类型的指针，其中包含前面参数中定义的函数的参数。
+
+b.*pthread_exit:* 用于终止线程
 
 	 void pthread_exit(void * retval);
 
@@ -37,7 +42,7 @@ b.*pthread_exit:*用于终止线程
 
 - **retval**: 它是一个指向整型变量的指针，该整数储存线程终止的返回状态。读取的整型变量必须为全局变量，以便让任何等待加入该线程的线程可以读取其返回状态。
 
-c. *pthread_join:*用于等待线程终止
+c. *pthread_join:* 用于等待线程终止
 
 将子线程并入主线程，主线程会一直阻塞直至子线程执行结束（收到目标子线程的返回值）后，才回收子线程资源，解除阻塞状态，并继续执行主线程
 	int pthread_join(pthread_t th,
@@ -48,10 +53,10 @@ c. *pthread_join:*用于等待线程终止
 - **th**：当前线程等待加入的目标线程的线程id。
 - **thraad_return**：指向th中提到的线程的退出状态存储位置的指针。
 
-d.*pthread_self:*用于获取当前线程id
+d.*pthread_self:* 用于获取当前线程id
 
 	pthread_t phread_self(void);
-e.*pthread_equal:*用于比较两个线程是否相同。如果两个线程相等则返回一个非零值，否则返回0。
+e.*pthread_equal:* 用于比较两个线程是否相同。如果两个线程相等则返回一个非零值，否则返回0。
 
 	int pthread_equal(pthread_t t1,
 						pthread_t t2);
@@ -61,7 +66,7 @@ e.*pthread_equal:*用于比较两个线程是否相同。如果两个线程相�
 - **t1**：第一个线程id
 - **t2**：第二个线程id
 
-f.*pthread_cancel:*用于向线程发送取消请求
+f.*pthread_cancel:* 用于向线程发送取消请求
 
 	int pthead_cancel(pthread_t thread);
 
@@ -69,7 +74,7 @@ f.*pthread_cancel:*用于向线程发送取消请求
 
 - **thread**：用于指定发送Cancel信号的目标线程
 
-g.*pthread_detach:*用于分离线程
+g.*pthread_detach:* 用于分离线程
 使用pthread_create创建的线程有两种状态：`joinable`和`ubjoinable`。默认情况下线程处于`joinable`状态，可以通过`pthread_attr_getdetachstate` 来获取线程状态。
 也可以通过如下代码来设置线程状态为`joinable`或者`unjoinable`
 

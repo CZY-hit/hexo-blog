@@ -3,6 +3,7 @@ title: 利用apache 2搭建一个简单的网站
 categories:
 - 网站搭建
 tags: [apache2]
+date: 2022-05-03 18:35:20
 ---
 通过apache2部署静态网页非常简单，下面介绍一下ubuntu环境通过apache2配置简单静态网页的流程。
 环境：Ubuntu 20.04 LTS, bash

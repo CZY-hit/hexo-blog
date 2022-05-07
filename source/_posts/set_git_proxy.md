@@ -4,6 +4,7 @@ data: 2022-05-04
 categories:
 - ubuntu20.04配置
 tags: [git,代理]
+date: 2022-05-03 23:35:15
 ---
 国内在使用使用git获取github上代码时往往速度很慢，甚至总会连接失败，此时就需要给git设置代理。
 <!--more-->

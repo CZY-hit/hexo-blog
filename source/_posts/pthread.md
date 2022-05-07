@@ -4,6 +4,7 @@ categories:
 - 聊天室
 - 多线程
 tags: [pthread,聊天室]
+date: 2022-05-05 12:30:15
 ---
 
 在Unix/Linux系统中，C/C++提供了`pthread`（POSIX线程）API。它允许我们为并发流程创建多个线程，这可以提高程序在多核处理器或上的执行速度。

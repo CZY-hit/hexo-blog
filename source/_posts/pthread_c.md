@@ -6,13 +6,12 @@ categories:
 tags: [pthread,聊天室]
 date: 2022-05-05 16:26:18
 ---
-**一、什么是线程**
+### 一、什么是线程
 通常，线程被定义为一个独立的指令流，可以被操作系统调度运行。线程是一个 *半进程* ，有自己的栈，执行给定的一段代码。因为线程具有进程的一些属性，所以也被成为*轻量级进程*
 <!--more-->
->引用 
-https://www.geeksforgeeks.org/multithreading-c-2/?ref=lbp
 
-**二、进程和线程的区别**
+
+### 二、进程和线程的区别
 线程之间不是相互独立的，线程是为了互相帮助而设计的。而进程可能来自不同的用户，所以进程不一定会互相帮助。
 
 线程之间共享*代码部分*、*数据部分*和*操作系统资源*，与进程一样，线程也有自己的程序计数器（PC）、寄存器集和堆栈空间。
@@ -20,7 +19,7 @@ https://www.geeksforgeeks.org/multithreading-c-2/?ref=lbp
 与进程相比，线程的开销要小的多，所有线程共享一个公共地址空间，从而避免了大量的的无效操作。
 
 
-**三、为什么使用多线程**
+### 三、为什么使用多线程
 线程是通过并行性改进应用程序性能的方式。例如，在浏览器中，多个选项卡可以是不同的线程,MS word使用一个线程格式化文本，另一个线程处理输入。
 
 相比与进程，线程的运行速度快的多，这主要是由于以下原因
@@ -30,7 +29,7 @@ https://www.geeksforgeeks.org/multithreading-c-2/?ref=lbp
 - 终止线程的时间比终止进程的时间短。
 - 线程间的通信很快，因为线程间共享地址空间，一个线程产生的数据可以立即供所有其他线程使用。
 
-**四、可以用C语言编写多线程吗**
+### 四、可以用C语言编写多线程吗
 [POSIX线程（或Pthreads）](https://www.geeksforgeeks.org/multithreading-c-2/?ref=lbp)是线程的POSIX标准。想用C语言实现`pthread`的实现需要通过gcc编译器，或者带有`pthread`库的C编译器。
 
 如下是一个简单的C程序，用于演示pthread的基本功能。
@@ -66,7 +65,7 @@ pthread_create()接收四个参数。
 第四个参数用于将参数传递给待执行函数（`myThreadFun`）。
 线程的`pthread_join()`函数等效于进程的`wait()`。对pthread_join的调用会阻塞主线程，直到标识符等于第一个参数的线程终止。
 
-**五、如何编译上面的程序**
+### 五、如何编译上面的程序
 想要用gcc编译上述多线程程序（这里假定上面的C程序文件名为`test.c`），我们需要将其与pthreads库连接，具体操作如下。
 	test@ubuntu:~/$ gcc multithread.c -lpthread
 	test@ubuntu:~/$ ./a.out
@@ -74,7 +73,7 @@ pthread_create()接收四个参数。
 	Printing GeeksQuiz from Thread 
 	After Thread
 
-**六、多线程访问全局变量和静态变量时的情况**
+###六、多线程访问全局变量和静态变量时的情况
 上文中提到，线程之间不是相互独立的，所有线程共享一个数据段，而全局变量和静态变量都存储在数据段中。下面是一个演示程序:
 
 	#include <stdio.h>
@@ -120,3 +119,6 @@ pthread_create()接收四个参数。
 	Thread ID: 3, Static: 6, Global: 6
 
 在实际工作中，一般不建议在线程中访问全局变量，因为不清楚线程之间的优先级。如果需要工作中多线程访问全局变量，应该通过互斥锁进行访问。
+
+>引用 
+https://www.geeksforgeeks.org/multithreading-c-2/?ref=lbp

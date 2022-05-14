@@ -4,7 +4,7 @@ categories:
 - 练习
 - socket
 tags: [socket,聊天室]
-date: 2022-05-06 20:59:33
+date: 2022-05-06 22:05:00
 ---
 小练习，服务器依次执行socket()、bind()、listen()函数，客户端依次执行socket()、connect()函数，服务器在收到connect()请求后发送accept()请求，完成本地的客户端-服务器连接。
 <!--more-->

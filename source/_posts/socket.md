@@ -4,9 +4,10 @@ categories:
 - 聊天室
 - socket
 tags: [socket,聊天室]
-date: 2022-05-06 22:05:00
+date: 2022-05-06 20:59:33
+
 ---
-**一、什么是socket编程**
+### 一、什么是socket编程
 socket编程可以通过网络让两个节点间实现通信。一个socket监听某个特定IP的特定端口，另一个socket发起连接申请。服务器（Server）形成一个监听socket，客户端负责向服务器发起连接请求。
 <!--more-->
 >引用 
@@ -17,7 +18,7 @@ https://www.cnblogs.com/eeexu123/p/5275783.html
 
 ![客户端-服务器模型](/img/cs-model.png)
 
-**二、socket套接字创建**
+### 二、socket套接字创建
 	
 	int sockfd = socket(domain,type,protocol);
 
@@ -28,7 +29,7 @@ https://www.cnblogs.com/eeexu123/p/5275783.html
 		2. SOCK_DGRAM: UDP(不可靠的，无连接)
 - **protocol**:表示传输协议，常用的有`IPPROTO_TCP`和`IPPTOTO_UDP`，分别表示TCP传输协议和UDP传输协议，设置为0时会自动推演出要使用什么协议。
 
-**三、Setsockopt**
+### 三、Setsockopt
 用于获取或者设置与某个套接字关联的选项。（没看懂，后续用到再学）
 
 	int setsockopt(int sockfd,int leverl,int optname,const void* optval,socklen_t optlen);
@@ -38,12 +39,13 @@ https://www.cnblogs.com/eeexu123/p/5275783.html
 - **optval**:对于getsockopt(),指向返回选项值的缓冲。对于setsockopt(),指向包含新选项值的缓冲。
 - **optlen**:对于getsockopt()，作为入口值时是选项值的最大长度。作为出口参数时是选项值的实际长度。对于setsockopt()，是现选项的长度。<br>
 
-**四、bind**
+###  四、bind
 创建socket后，bind函数将socket绑定到addr中指定的地址和端口号。
 
 	int bind(int sockfd,const struct sockaddr * addr,socklen_t addrlen);
 
 - **sockfd**: socket描述字，是socket的唯一标识符。
+- **addrlen**：对应的是地址的长度。
 - **adr**: 一个`const struct sockaddr*`指针，指向要绑定给`sockfd`的协议地址，这个地址结构根据地址创建socket时的地址协议族不同而不同。
 比如，IPV4对应的是
 ```
@@ -72,22 +74,23 @@ struct in6_addr {
     unsigned char   s6_addr[16];   /* IPv6 address */ 
 };
 ```
-- **addrlen**：对应的是地址的长度。
 
-**五、listen**
+###  五、listen
 listen将服务器socket置于被动模式，等待客户端发送connect请求以建立连接。
 
 	int listen(int sockfd, int backlog);
 - sockfd为要监听的socket的描述字
-- backlog定义了sockfd可以排队的最大连接个数，如果连接已满时有新的连接请求到达，客户端就可能会收到ECONNREFUSED指示的错误。<br>
-**六、connect**
+- backlog定义了sockfd可以排队的最大连接个数，如果连接已满时有新的连接请求到达，客户端就可能会收到ECONNREFUSED指示的错误。
+
+### 六、connect
 客户端通过调用connect()函数来建立与TCP服务器的连接。使用之前，客户端需要先执行socket操作创建客户端自身的套接字。
 
 	int connect(int sockfd,const struct sockaddr * addr,socklen_t addrlen);
 - **sockfd**：为客户端自身的socket描述字。
 - **addr**： 为服务器的socket地址
 - **addrlen**：服务器socket地址的长度。
-**七、accept与close**
+
+### 七、accept与close
 TCP服务器依次调用`socket()`、`bind()`、`listen()`后，就会监听指定的socket地址了。
 
 TCP客户端依次调用`socket()`、`connect()`后就向TCP服务器发送了一个连接请求。TCP服务器监听到这个请求之后，就会通过`accept()`函数接收请求，这样连接就建立好了。之后就可以开始网络I/O操作了，类似于普通文件的I/O操作。
@@ -106,7 +109,7 @@ close一个socket时会默认把该socket标记为已关闭，然后立即返回
 
 close操作只是使相应描述字的引用次数-1,只有当引用次数为0的时候，才会触发TCP客户端向服务器发送终止连接请求。
 
-**八、sockaddr_in结构体**
+### 八、sockaddr_in结构体
 ![sockaddr_in结构体](/img/sockaddr_in_struct.png)
 - **sin_family**：指代协议族，在socket编程中只能用AF_INET
 - **sin_port**：存储端口号（使用网络字节顺序）
@@ -122,7 +125,7 @@ address.sin_addr.s_addr=inet_addr("127.0.0.1");
 //inet_addr作用是将一个IP点分十进制IP地址转换为一个无符号长整型。
 //inet_addr函数的头文件是netinet/in.h
 ```
-**九、socket中的TCP三次握手建立连接**
+### 九、socket中的TCP三次握手建立连接
 tcp建立连接需要进行三次握手，这三次握手的大致流程如下：
 
 - 第一次握手，客户端向服务器发送一个`SYN J`
@@ -139,7 +142,7 @@ tcp建立连接需要进行三次握手，这三次握手的大致流程如下�
 
 服务器接收到`ACK K+1`时`accept`返回，至此三次握手建立完毕，连接建立。
 
-**十、socket中的TCP四次握手释放连接**
+### 十、socket中的TCP四次握手释放连接
 介绍一下socket中四次握手释放连接的过程，先看下图。
 ![socket中四次握手释放连接的过程](/img/handshake4_to_disconnect.png)
 图示过程如下
@@ -151,7 +154,7 @@ tcp建立连接需要进行三次握手，这三次握手的大致流程如下�
 
 这样每个方向上都有一个`FIN`和`ACK`
 
-**十一、示例**
+### 十一、示例
 在这里，我们在客户端与服务器之间交换一条hello消息来演示client/server模型。
 
 服务器代码
